@@ -1,11 +1,10 @@
-// ./assets/js/components/TodoList.js
+// ./assets/js/components/Todos.js
 
 import React, {Component} from 'react';
 import CONFIG from '../../config.json';
 
 // Components
 import Loading from '../common/Loading';
-import Messages from '../common/Messages';
 import TodoForm from './TodoForm';
 import TodosList from './TodosList';
 

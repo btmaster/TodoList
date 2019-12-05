@@ -1,4 +1,4 @@
-// ./assets/js/components/TodoItem.js
+// ./assets/js/components/TodoForm.js
 
 import React, {Component} from 'react';
 import CONFIG from '../../config.json';

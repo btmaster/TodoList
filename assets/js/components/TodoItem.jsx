@@ -80,7 +80,6 @@ class TodoItem extends Component {
                 "description": this.state.todo.description
             })
         }).then((result) => {
-            console.log(result);
             if (result.status == 200) {
                 this.setState({
                     edit: false
@@ -94,7 +93,6 @@ class TodoItem extends Component {
     }
 
     render() {
-        console.log(this.state.todo.description);
         return (
             <li
                 className={this.state.todo.done ? "done" : "not-done"}

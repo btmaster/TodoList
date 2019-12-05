@@ -20,7 +20,7 @@ class TodoController extends AbstractController
      * @Route("/api/todo", name="get_all_todo", methods={"GET"})
      * @return JsonResponse
      */
-    public function getTodos()
+    public function getTodos(): ?JsonResponse
     {
         $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
         $todos= $this->getDoctrine()
@@ -33,9 +33,11 @@ class TodoController extends AbstractController
 
     /**
      * @Route("/api/todo", name="create_todo", methods={"POST"})
-     * @return Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @return Response
      */
-    public function createTodo(Request $request, ValidatorInterface $validator)
+    public function createTodo(Request $request, ValidatorInterface $validator): ?Response
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -58,9 +60,12 @@ class TodoController extends AbstractController
 
     /**
      * @Route("/api/todo/{id}", name="edit_todo", methods={"PUT"})
-     * @return Symfony\Component\HttpFoundation\Response
+     * @param int $id
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @return Response
      */
-    public function editTodo(int $id, Request $request, ValidatorInterface $validator)
+    public function editTodo(int $id, Request $request, ValidatorInterface $validator): ?Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $todo = $entityManager->getRepository(Todo::class)->find($id);
@@ -83,9 +88,9 @@ class TodoController extends AbstractController
      * @Route("/api/todo/done/{id}", name="todo_done", methods={"PUT"}, requirements={"id"="\d+"})
      * @param int $id
      * @param boolean $done
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function setTodoDone(int $id, $done = true)
+    public function setTodoDone(int $id, $done = true): ?Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $todo = $entityManager->getRepository(Todo::class)->find($id);
@@ -106,9 +111,9 @@ class TodoController extends AbstractController
     /**
      * @Route("/api/todo/{id}", name="remove_todo", methods={"DELETE"}, requirements={"id"="\d+"})
      * @param int $id
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function removeTodo(int $id)
+    public function removeTodo(int $id): ?Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $todo = $entityManager->getRepository(Todo::class)->find($id);

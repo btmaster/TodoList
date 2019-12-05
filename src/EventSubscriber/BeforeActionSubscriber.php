@@ -10,12 +10,19 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 class BeforeActionSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return array(
             KernelEvents::CONTROLLER => 'convertJsonStringToArray',
         );
     }
+
+    /**
+     * @param FilterControllerEvent $event
+     */
     public function convertJsonStringToArray(FilterControllerEvent $event)
     {
         $request = $event->getRequest();
