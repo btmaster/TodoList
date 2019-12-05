@@ -96,7 +96,9 @@ class TodoItem extends Component {
     render() {
         console.log(this.state.todo.description);
         return (
-            <li>
+            <li
+                className={this.state.todo.done ? "done" : "not-done"}
+            >
                 <p>
                     <input
                         type="checkbox"
@@ -111,26 +113,32 @@ class TodoItem extends Component {
                             {
                                 this.state.todo.description
                                 ?
-                                <a onClick={(e) => this.handleSubmitDescription(e)}>
-                                    <FontAwesomeIcon icon={faCheck} />
-                                </a>
+                                <span className="icon check-icon">
+                                    <a onClick={(e) => this.handleSubmitDescription(e)}>
+                                        <FontAwesomeIcon icon={faCheck} />
+                                    </a>
+                                </span>
                                 :
-                                <span className="disabled">
+                                <span className="icon disabled-icon">
                                     <FontAwesomeIcon icon={faCheck} />
                                 </span>
                             }
                         </span>
                         :
                         <span>
-                            {this.state.todo.description}
-                            <a onClick={() => this.setState({edit: !this.state.edit})}>
-                                <FontAwesomeIcon icon={faPencilAlt} />
-                            </a>
+                            <span className="description">{this.state.todo.description}</span>
+                            <span className="icon edit-icon">
+                                <a onClick={() => this.setState({edit: !this.state.edit})}>
+                                    <FontAwesomeIcon icon={faPencilAlt} />
+                                </a>
+                            </span>
                         </span>
                     }
-                    <a onClick={() => this.removeTodo()}>
-                        <FontAwesomeIcon icon={faTrashAlt} />
-                    </a>
+                    <span className="icon remove-icon">
+                        <a onClick={() => this.removeTodo()}>
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                        </a>
+                    </span>
                 </p>
             </li>
         )

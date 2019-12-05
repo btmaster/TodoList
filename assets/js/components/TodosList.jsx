@@ -9,6 +9,8 @@ export default function TodosList(props) {
     );
 
     return (
-        <ul>{listItems}</ul>
+        <div className="list">
+            <ul>{listItems}</ul>
+        </div>
     );
 }

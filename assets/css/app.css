@@ -1,5 +1,5 @@
 body {
-    background-color: #0b2029;
+    background-color: #0b2029 !important;
 }
 
 h1 {
@@ -20,4 +20,54 @@ h1 {
     margin: auto;
     width: 80%;
     text-align: center;
+}
+
+.form-add input[type=text], ul li p input[type=text] {
+    border-radius: 10px;
+    text-shadow: none;
+    border: 1px solid #DCE1E5;
+    padding: 5px;
+    width: 70%;
+    margin-right: 10px;
+}
+
+.form-add input[type=submit] {
+    width: 20%;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid #DCE1E5;
+}
+
+.list {
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 1px solid #DCE1E5;
+}
+
+ul {
+    padding: 0px;
+}
+
+ul li {
+    list-style: none;
+    width: 100%;
+    padding: 10px 10px 0px 10px;
+    border-bottom: 1px solid #DCE1E5;
+}
+
+ul li p input[type=checkbox] {
+    margin-right: 5px;
+}
+
+.description {
+    display: inline-block;
+    width: 70%;
+}
+
+.done {
+    background: #DCE1E5;
+}
+
+.done .description {
+    text-decoration: line-through;
 }
