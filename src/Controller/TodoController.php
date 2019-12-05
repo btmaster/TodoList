@@ -27,14 +27,13 @@ class TodoController extends AbstractController
      * @Route("/api/todo", name="create_todo", methods={"POST"})
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function createTodo(Request $request)
+    public function createTodo(Request $request, ValidatorInterface $validator)
     {
-        var_dump($request->request);
-        exit();
         $entityManager = $this->getDoctrine()->getManager();
 
         $todo = new Todo();
-        $todo->setDescription($request->get('description'));
+        $todo->setDescription($request->request->get('description'));
+        $todo->setModifiedAt(new \DateTime());
         $todo->setCreatedAt(new \DateTime());
 
         //Validate todo object on properties
@@ -50,12 +49,35 @@ class TodoController extends AbstractController
     }
 
     /**
-     * @Route("/api/todo/{id}", name="edit_todo", methods={"PUT"}, requirements={"id"="\d+"})
+     * @Route("/api/todo/{id}", name="edit_todo", methods={"PUT"}
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function editTodo(int $id, Request $request, ValidatorInterface $validator)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $todo = $entityManager->getRepository(Todo::class)->find($id);
+        $todo->setDescription($request->request->get('description'));
+        $todo->setModifiedAt(new \DateTime());
+
+        //Validate todo object on properties
+        $errors = $validator->validate($todo);
+        if (count($errors) > 0) {
+            return new Response((string) $errors, 400);
+        }
+
+        $entityManager->persist($todo);
+        $entityManager->flush();
+
+        return new Response('Edited todo with id ' . $todo->getId());
+    }
+
+    /**
+     * @Route("/api/todo/done/{id}", name="todo_done", methods={"PUT"}, requirements={"id"="\d+"})
      * @param int $id
      * @param boolean $done
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function editTodo(int $id, $done = true)
+    public function setTodoDone(int $id, $done = true)
     {
         $entityManager = $this->getDoctrine()->getManager();
         $todo = $entityManager->getRepository(Todo::class)->find($id);
@@ -67,6 +89,7 @@ class TodoController extends AbstractController
         }
 
         $todo->setDone(!$todo->getDone());
+        $todo->setModifiedAt(new \DateTime());
         $entityManager->flush();
 
         return new Response('Set todo with id ' . $id . ($todo->getDone() ? " done" : " not done"));
