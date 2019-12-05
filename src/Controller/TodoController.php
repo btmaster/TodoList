@@ -6,21 +6,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Todo;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TodoController extends AbstractController
 {
     /**
      * @Route("/api/todo", name="get_all_todo", methods={"GET"})
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return JsonResponse
      */
     public function getTodos()
     {
-        $products = $this->getDoctrine()
-        ->getRepository(Todo::class)
-        ->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+        $todos= $this->getDoctrine()
+            ->getRepository(Todo::class)
+            ->findAll();
+        $serializedTodos = $serializer->serialize($todos, 'json');
+
+        return JsonResponse::fromJsonString($serializedTodos);
     }
 
     /**
@@ -49,7 +57,7 @@ class TodoController extends AbstractController
     }
 
     /**
-     * @Route("/api/todo/{id}", name="edit_todo", methods={"PUT"}
+     * @Route("/api/todo/{id}", name="edit_todo", methods={"PUT"})
      * @return Symfony\Component\HttpFoundation\Response
      */
     public function editTodo(int $id, Request $request, ValidatorInterface $validator)

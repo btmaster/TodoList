@@ -27,7 +27,6 @@ class TodoRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->orderBy('t.createdAt', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 }
