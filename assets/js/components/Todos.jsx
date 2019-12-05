@@ -5,6 +5,7 @@ import CONFIG from '../../config.json';
 
 // Components
 import Loading from '../common/Loading';
+import Messages from '../common/Messages';
 import TodoForm from './TodoForm';
 import TodosList from './TodosList';
 
@@ -13,7 +14,9 @@ class TodoList extends Component {
         super(props);
         this.state = {
             todos: [],
-            loading: true
+            loading: true,
+            success: false,
+            error: false
         }
         this.loadTodos();
     }
@@ -30,10 +33,17 @@ class TodoList extends Component {
             });
     }
 
+    setMessage(message, type) {
+        this.setState({
+            [type]: message
+        });
+    }
+
     render() {
         console.log(this.state.todos);
         return (
             <div>
+                <Messages error={this.state.error} success={this.state.success} />
                 <h1>Todo's</h1>
                 {
                     this.state.loading
@@ -41,7 +51,11 @@ class TodoList extends Component {
                     <Loading />
                     :
                     <div>
-                        <TodoForm loadTodos={() => this.loadTodos()}/>
+                        <TodoForm
+                            loadTodos={() => this.loadTodos()}
+                            setSuccessMessage={(message) => this.setMessage(message, "success")}
+                            setErrorMessage={(message) => this.setMessage(message, "error")}
+                        />
                         <TodosList todos={this.state.todos} />
                     </div>
                 }

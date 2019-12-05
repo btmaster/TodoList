@@ -25,7 +25,7 @@ class TodoRepository extends ServiceEntityRepository
     public function findAll()
     {
         return $this->createQueryBuilder('t')
-            ->orderBy('t.createdAt', 'ASC')
+            ->orderBy('t.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
     }

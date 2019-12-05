@@ -21,6 +21,7 @@
     "dependencies": {
         "@babel/plugin-proposal-class-properties": "^7.7.4",
         "@babel/plugin-transform-runtime": "^7.7.4",
+        "react-fontawesome": "^1.7.1",
         "react-router-dom": "^5.1.2"
     }
 }
