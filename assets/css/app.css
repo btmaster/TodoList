@@ -1,11 +1,11 @@
 body {
     background-color: #0b2029 !important;
+    color: #0b2029;
 }
 
 h1 {
     text-align: center;
     border-bottom: 1px solid #bcdfee;
-    color: #0b2029;
 }
 
 #root {
@@ -28,7 +28,7 @@ h1 {
     border: 1px solid #DCE1E5;
     padding: 5px;
     width: 70%;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .form-add input[type=submit] {
@@ -70,4 +70,23 @@ ul li p input[type=checkbox] {
 
 .done .description {
     text-decoration: line-through;
+}
+
+.icon {
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    margin-right: 5px;
+}
+
+.edit-icon {
+    background-color: #EEAC56;
+}
+
+.remove-icon {
+    background-color: #D75553;
+}
+
+.check-icon {
+    background-color: #5BB75F;
 }
