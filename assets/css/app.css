@@ -1,12 +1,23 @@
 body {
-    background-color: lightgray;
+    background-color: #0b2029;
 }
 
-
-.success-message {
-    color: green;
+h1 {
+    text-align: center;
+    border-bottom: 1px solid #bcdfee;
+    color: #0b2029;
 }
 
-.error-message {
-    color: red;
+#root {
+    background: white;
+    width: 50%;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.form-add {
+    margin: auto;
+    width: 80%;
+    text-align: center;
 }

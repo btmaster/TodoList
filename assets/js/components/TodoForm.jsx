@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 import CONFIG from '../../config.json';
+import SweetAlert from 'sweetalert';
 
 class TodoForm extends Component {
     constructor(props) {
@@ -34,19 +35,19 @@ class TodoForm extends Component {
                         description: ""
                     });
                     this.props.loadTodos();
-                    this.props.setSuccessMessage("Task is successfully added");
+                    swal("Success!", "Your task is added!", "success");
                 } else {
-                    this.props.setErrorMessage("There was an error when adding the task");
+                    swal("Oops!", "Something went wrong!", "error");
                 }
             });
         } else {
-            this.props.setErrorMessage("There is no description filled in");
+            swal("Oops!", "Description is empty", "error");
         }
     }
 
     render() {
         return (
-            <div>
+            <div className="form-add">
                 <form onSubmit={(e) => this.handleSubmit(e)}>
                     <input
                         type="text"
