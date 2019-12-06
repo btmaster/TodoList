@@ -4,7 +4,12 @@ import React, {Component} from 'react';
 import CONFIG from '../../config.json';
 import SweetAlert from 'sweetalert';
 
+/**
+ * A form to add a new todo to the overview
+ *
+ */
 class TodoForm extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -14,12 +19,22 @@ class TodoForm extends Component {
         }
     }
 
+    /**
+     * Handle change on input field
+     *
+     * @param {object} event
+     */
     handleChange(event) {
         this.setState({
             description: event.target.value
         });
     }
 
+    /**
+     * Handle the form submit of a new todo item
+     *
+     * @param {object} event
+     */
     handleSubmit(event)  {
         event.preventDefault();
         if (this.state.description) {
@@ -34,6 +49,8 @@ class TodoForm extends Component {
                     this.setState({
                         description: ""
                     });
+                    
+                    //Load todo list again, so new item shows up.
                     this.props.loadTodos();
                     swal("Success!", "Your task is added!", "success");
                 } else {

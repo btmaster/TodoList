@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class TodoController extends AbstractController
 {
     /**
+     * Get list of todos
      * @Route("/api/todo", name="get_all_todo", methods={"GET"})
      * @return JsonResponse
      */
@@ -32,6 +33,7 @@ class TodoController extends AbstractController
     }
 
     /**
+     * Add a new todo item
      * @Route("/api/todo", name="create_todo", methods={"POST"})
      * @param Request $request
      * @param ValidatorInterface $validator
@@ -59,6 +61,7 @@ class TodoController extends AbstractController
     }
 
     /**
+     * Edit an existing todo
      * @Route("/api/todo/{id}", name="edit_todo", methods={"PUT"})
      * @param int $id
      * @param Request $request
@@ -88,6 +91,7 @@ class TodoController extends AbstractController
     }
 
     /**
+     * Set a todo to done or not done
      * @Route("/api/todo/done/{id}", name="todo_done", methods={"PUT"}, requirements={"id"="\d+"})
      * @param int $id
      * @param boolean $done
@@ -110,6 +114,7 @@ class TodoController extends AbstractController
     }
 
     /**
+     * Remove an existing todo
      * @Route("/api/todo/{id}", name="remove_todo", methods={"DELETE"}, requirements={"id"="\d+"})
      * @param int $id
      * @return Response

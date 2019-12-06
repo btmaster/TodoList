@@ -6,6 +6,10 @@ import { faCheck, faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-ic
 import SweetAlert from 'sweetalert';
 import CONFIG from '../../config.json';
 
+/**
+ * A todo item from the todo list
+ *
+ */
 class TodoItem extends Component {
     constructor(props) {
         super(props);
@@ -23,6 +27,10 @@ class TodoItem extends Component {
       return null;
     }
 
+    /**
+     * Handle the change of the checkbox field and set the todo done or not done with api call
+     *
+     */
     handleCheckbox() {
         fetch(CONFIG.API_URL + '/todo/done/' + this.state.todo.id, {
             method: 'put',
@@ -39,10 +47,14 @@ class TodoItem extends Component {
         });
     }
 
+    /**
+     * Remove a todo from the list
+     *
+     */
     removeTodo() {
         swal({
           title: "Are you sure?",
-          text: "Are you sure that you want to leave this page?",
+          text: "Are you sure that you want to remove this todo?",
           icon: "warning",
           buttons: true,
           dangerMode: true,
@@ -54,8 +66,9 @@ class TodoItem extends Component {
                   headers: {'Content-Type':'application/json'}
               }).then((result) => {
                   if (result.status == 200) {
+                      //Load todo list again, so removed item dissapears
                       this.props.loadTodos();
-                      swal("Success!", "Your task is removed!", "success");
+                      swal("Success!", "Your todo is removed!", "success");
                   } else {
                       swal("Oops!", "Something went wrong!", "error");
                   }
@@ -64,6 +77,11 @@ class TodoItem extends Component {
         });
     }
 
+    /**
+     * Handle the change of the description input field
+     *
+     * @param {object} event
+     */
     handleDescriptionChange(event) {
         this.state.todo.description = event.target.value;
         this.setState({
@@ -71,6 +89,11 @@ class TodoItem extends Component {
         });
     }
 
+    /**
+    * Handle the form submit of a edit of a existing todo item
+     *
+     * @param {object} event
+     */
     handleSubmitDescription(event) {
         event.preventDefault();
         fetch(CONFIG.API_URL + '/todo/' + this.state.todo.id, {
@@ -83,7 +106,9 @@ class TodoItem extends Component {
             if (result.status == 200) {
                 this.setState({
                     edit: false
-                })
+                });
+
+                //Load list of todo's again with the todo edited
                 this.props.loadTodos();
                 swal("Success!", "Your task is updated!", "success");
             } else {
@@ -94,9 +119,7 @@ class TodoItem extends Component {
 
     render() {
         return (
-            <li
-                className={this.state.todo.done ? "done" : "not-done"}
-            >
+            <li className={this.state.todo.done ? "done" : "not-done"}>
                 <p>
                     <input
                         type="checkbox"
@@ -107,7 +130,11 @@ class TodoItem extends Component {
                         this.state.edit
                         ?
                         <span>
-                            <input type="text" value={this.state.todo.description} onChange={(e) => this.handleDescriptionChange(e)} />
+                            <input
+                                type="text"
+                                value={this.state.todo.description}
+                                onChange={(e) => this.handleDescriptionChange(e)}
+                            />
                             {
                                 this.state.todo.description
                                 ?

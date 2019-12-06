@@ -21,6 +21,7 @@ class BeforeActionSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * Convert a json body of an api to a api request object
      * @param FilterControllerEvent $event
      */
     public function convertJsonStringToArray(FilterControllerEvent $event)

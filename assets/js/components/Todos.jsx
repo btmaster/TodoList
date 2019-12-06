@@ -8,6 +8,10 @@ import Loading from '../common/Loading';
 import TodoForm from './TodoForm';
 import TodosList from './TodosList';
 
+/**
+ * The overview list of todos
+ *
+ */
 class TodoList extends Component {
     constructor(props) {
         super(props);
@@ -18,6 +22,10 @@ class TodoList extends Component {
         this.loadTodos();
     }
 
+    /**
+     * Load list of todos via the api call and set loading on false and put the result on the state
+     *
+     */
     loadTodos() {
         fetch(CONFIG.API_URL + '/todo')
             .then(res => res.json())
@@ -27,12 +35,6 @@ class TodoList extends Component {
                     todos: result
                 });
             });
-    }
-
-    setMessage(message, type) {
-        this.setState({
-            [type]: message
-        });
     }
 
     render() {
