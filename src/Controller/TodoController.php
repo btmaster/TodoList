@@ -49,7 +49,7 @@ class TodoController extends AbstractController
         //Validate todo object on properties
         $errors = $validator->validate($todo);
         if (count($errors) > 0) {
-            return new Response((string) $errors, 400);
+            return new Response((string) $errors, 500);
         }
 
         $entityManager->persist($todo);
@@ -69,13 +69,16 @@ class TodoController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $todo = $entityManager->getRepository(Todo::class)->find($id);
+        if (!$todo) {
+            return new Response((string) 'No todo found for id ' . $id, 400);
+        }
         $todo->setDescription($request->request->get('description'));
         $todo->setModifiedAt(new \DateTime());
 
         //Validate todo object on properties
         $errors = $validator->validate($todo);
         if (count($errors) > 0) {
-            return new Response((string) $errors, 400);
+            return new Response((string) $errors, 500);
         }
 
         $entityManager->persist($todo);
@@ -96,9 +99,7 @@ class TodoController extends AbstractController
         $todo = $entityManager->getRepository(Todo::class)->find($id);
 
         if (!$todo) {
-            throw $this->createNotFoundException(
-                'No todo found for id ' . $id
-            );
+            return new Response((string) 'No todo found for id ' . $id, 400);
         }
 
         $todo->setDone(!$todo->getDone());
@@ -119,9 +120,7 @@ class TodoController extends AbstractController
         $todo = $entityManager->getRepository(Todo::class)->find($id);
 
         if (!$todo) {
-            throw $this->createNotFoundException(
-                'No todo found for id ' . $id
-            );
+            return new Response((string) 'No todo found for id ' . $id, 400);
         }
 
         $entityManager->remove($todo);
