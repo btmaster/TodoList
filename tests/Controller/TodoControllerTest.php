@@ -58,7 +58,7 @@ class TodoControllerTest extends WebTestCase
 
         $id = &$this->getSharedId();
         $client->request('POST', '/api/todo/' . $id, ["description" => ""]);
-
+        var_dump($client->getResponse());exit();
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
